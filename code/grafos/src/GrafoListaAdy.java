@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class GrafoListaAdy implements Grafo{
     /* Cantidad de Vertices */
@@ -11,7 +8,7 @@ public class GrafoListaAdy implements Grafo{
     private List<List<Arista>> adj;
 
     /* Lista de Nombres de los Nodos */
-    List<String> nombresVert;
+    private List<String> nombresVert;
 
     public GrafoListaAdy(){
         this.cantVert = 0;
@@ -33,7 +30,8 @@ public class GrafoListaAdy implements Grafo{
 
         nombresVert.add(nombre);
         adj.add(new LinkedList<>());
-        return nombresVert.size() - 1;
+        cantVert++;
+        return cantVert - 1;
     }
 
     @Override
@@ -52,8 +50,29 @@ public class GrafoListaAdy implements Grafo{
     }
 
     @Override
-    public void elimVertice(String nombre) {
+    public void elimVertice(String nombre) throws VerticeNoEncontradoException {
+        int idNodo = buscar(nombre);
+        List<String> tmpNombresVert = new ArrayList<>();
+        List<List<Arista>> tmpAdj = new ArrayList<>();
 
+        for(int i=0; i < nombresVert.size(); i++){
+            if( !nombre.equals(nombresVert.get(i)) ){
+                tmpNombresVert.add(nombresVert.get(i));
+
+                tmpAdj.add(new LinkedList<>());
+
+                Iterator it = adj.get(i).iterator();
+                while( it.hasNext() ){
+                    Arista arista = (Arista) it.next();
+
+                    if( arista.getDestino() != idNodo )
+                        tmpAdj.get(tmpAdj.size() - 1).add(arista);
+                }
+            }
+        }
+        nombresVert = tmpNombresVert;
+        tmpAdj = tmpAdj;
+        cantVert--;
     }
 
     @Override
@@ -71,6 +90,10 @@ public class GrafoListaAdy implements Grafo{
                 tmp.add(arista);
         }
         adj.set(idOrigen, tmp);
+    }
+
+    public int getCantVert() {
+        return cantVert;
     }
 
     @Override
@@ -104,12 +127,37 @@ public class GrafoListaAdy implements Grafo{
     }
 
     @Override
-    public List recorridoAmplitud(String verticeOrigen) {
-        return null;
+    public List recorridoAmplitud(String verticeOrigen) throws VerticeNoEncontradoException {
+        int idOrigen = buscar(verticeOrigen);
+        Queue<Integer> Q = new LinkedList<>();
+        List<Integer> ans = new LinkedList<>();
+        boolean[] marca = new boolean[cantVert];
+
+        Q.add(idOrigen);
+        marca[idOrigen] = true;
+        while( !Q.isEmpty() ){
+            int nod = Q.remove();
+            ans.add(nod);
+
+            Iterator it = adj.get(nod).iterator();
+            while( it.hasNext() ){
+                int idNuevoNodo = ((Arista) it.next()).getDestino();
+
+                if( !marca[idNuevoNodo] ){
+                    marca[idNuevoNodo] = true;
+                    Q.add(idNuevoNodo);
+                }
+            }
+        }
+        return ans;
     }
 
     @Override
     public List recorridoProfundidad(String verticeOrigen) {
         return null;
+    }
+
+    public String getNombre(int idNodo){
+        return nombresVert.get(idNodo);
     }
 }

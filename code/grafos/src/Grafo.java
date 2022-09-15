@@ -27,7 +27,7 @@ public interface Grafo {
      * Elimina un nodo del grafo
      * @param nombre Este es el nombre del grafo
      */
-    void elimVertice(String nombre);
+    void elimVertice(String nombre) throws VerticeNoEncontradoException;
 
     /**
      * Elimina una arista del grafo
@@ -56,7 +56,7 @@ public interface Grafo {
      * @param verticeOrigen Vertice donde comineza el recorrido
      * @return Retorna una lista con los ids de los vertices, en el orden en que se recorrieron
      */
-    List recorridoAmplitud(String verticeOrigen);
+    List recorridoAmplitud(String verticeOrigen) throws VerticeNoEncontradoException;
 
     /**
      * Realiza un recorrido del primero en profundidad, en el grafo
