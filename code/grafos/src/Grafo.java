@@ -44,6 +44,13 @@ public interface Grafo {
     int buscar(String nombre) throws VerticeNoEncontradoException;
 
     /**
+     * Retorna el nombre de un nodo, dado el id
+     * @param id Identificador del nodo
+     * @return Retorna una cadena con el nombre del nodo
+     */
+    String getNombre(int idNodo);
+
+    /**
      * Comprueba que dos nodos estan unidos por una arista
      * @param origen Nodo origen
      * @param destino Nodo final
@@ -63,5 +70,5 @@ public interface Grafo {
      * @param verticeOrigen Vertice donde comineza el recorrido
      * @return Retorna una lista con los ids de los vertices, en el orden en que se recorrieron
      */
-    List recorridoProfundidad(String verticeOrigen);
+    List recorridoProfundidad(String verticeOrigen) throws VerticeNoEncontradoException;
 }
