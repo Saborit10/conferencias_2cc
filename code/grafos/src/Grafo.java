@@ -34,14 +34,14 @@ public interface Grafo {
      * @param origen Este es el nodo origen de la arista
      * @param destino Este es el nodo final de la arista
      */
-    void elimArista(String origen, String destino);
+    void elimArista(String origen, String destino) throws VerticeNoEncontradoException;
 
     /**
      * Busca el id de un vertice
      * @param nombre Este es el nombre del vertice
      * @return Retorna el id del vertice buscado
      */
-    int buscar(String nombre);
+    int buscar(String nombre) throws VerticeNoEncontradoException;
 
     /**
      * Comprueba que dos nodos estan unidos por una arista
@@ -49,7 +49,7 @@ public interface Grafo {
      * @param destino Nodo final
      * @return Retorna true si los nodos estan unidos por una arista. En caso contrario retorna falso.
      */
-    boolean esAdyacente(String origen, String destino);
+    boolean esAdyacente(String origen, String destino) throws VerticeNoEncontradoException;
 
     /**
      * Realiza un recorrido del primero a lo ancho, en el grafo
