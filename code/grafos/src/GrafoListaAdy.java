@@ -17,21 +17,27 @@ public class GrafoListaAdy implements Grafo {
     }
 
     @Override
-    public int insVertice(String nombre) {
+    public int buscar(String nombre) throws VerticeNoEncontradoException {
         int id = 0;
-        Iterator it = nombresVert.iterator();
-        while (it.hasNext()) {
-            String nodo = (String) it.next();
+        for(String nodo: nombresVert){
             if (nodo.equals(nombre))
                 return id;
-
             id++;
         }
+        throw new VerticeNoEncontradoException();
+    }
 
-        nombresVert.add(nombre);
-        adj.add(new LinkedList<>());
-        cantVert++;
-        return cantVert - 1;
+    @Override
+    public int insVertice(String nombre) {
+        try{
+            int id = buscar(nombre);
+            return id;
+        } catch (VerticeNoEncontradoException e) {
+            nombresVert.add(nombre);
+            adj.add(new LinkedList<>());
+            cantVert++;
+            return cantVert - 1;
+        }
     }
 
     @Override
@@ -96,49 +102,20 @@ public class GrafoListaAdy implements Grafo {
         adj.set(idOrigen, tmp);
     }
 
-    public int getCantVert() {
-        return cantVert;
-    }
-
-    @Override
-    public int buscar(String nombre) throws VerticeNoEncontradoException {
-        int id = 0;
-        Iterator it = nombresVert.iterator();
-        while (it.hasNext()) {
-            String nodo = (String) it.next();
-            if (nodo.equals(nombre))
-                return id;
-
-            id++;
-        }
-        throw new VerticeNoEncontradoException();
-    }
-
     @Override
     public boolean esAdyacente(String origen, String destino) throws VerticeNoEncontradoException {
         int idOrigen = buscar(origen);
         int idDestino = buscar(destino);
-
 
         for(Arista arista: adj.get(idOrigen)){
             if (arista.getDestino() == idDestino)
                 return true;            
         }
         return false;
-
-        // Iterator it = adj.get(idOrigen).iterator();
-
-        // while (it.hasNext()) {
-        //     Arista arista = (Arista) it.next();
-
-        //     if (arista.getDestino() == idDestino)
-        //         return true;
-        // }
-        // return false;
     }
 
     @Override
-    public List recorridoAmplitud(String verticeOrigen) throws VerticeNoEncontradoException {
+    public List<Integer> recorridoAmplitud(String verticeOrigen) throws VerticeNoEncontradoException {
         int idOrigen = buscar(verticeOrigen);
         Queue<Integer> Q = new LinkedList<>();
         List<Integer> orden = new LinkedList<>();
@@ -150,9 +127,8 @@ public class GrafoListaAdy implements Grafo {
             int nod = Q.remove();
             orden.add(nod);
 
-            Iterator it = adj.get(nod).iterator();
-            while (it.hasNext()) {
-                int idNuevoNodo = ((Arista) it.next()).getDestino();
+            for (Arista arista: adj.get(nod)){
+                int idNuevoNodo = arista.getDestino();
 
                 if (!marca[idNuevoNodo]) {
                     marca[idNuevoNodo] = true;
@@ -164,12 +140,11 @@ public class GrafoListaAdy implements Grafo {
     }
 
     @Override
-    public List recorridoProfundidad(String verticeOrigen) throws VerticeNoEncontradoException {
+    public List<Integer> recorridoProfundidad(String verticeOrigen) throws VerticeNoEncontradoException {
         boolean[] marca = new boolean[cantVert];
         List<Integer> orden = new LinkedList<>();
 
         recorridoProfundidadRecursivo(buscar(verticeOrigen), orden, marca);
-
         return orden;
     }
 
@@ -177,10 +152,8 @@ public class GrafoListaAdy implements Grafo {
         marca[idNodo] = true;
         orden.add(idNodo);
 
-        Iterator it = adj.get(idNodo).iterator();
-
-        while (it.hasNext()) {
-            int idNuevoNodo = ((Arista) it.next()).getDestino();
+        for(Arista arista: adj.get(idNodo)){
+            int idNuevoNodo = arista.getDestino();
 
             if (!marca[idNuevoNodo]) {
                 recorridoProfundidadRecursivo(idNuevoNodo, orden, marca);
@@ -190,6 +163,10 @@ public class GrafoListaAdy implements Grafo {
 
     public String getNombre(int idNodo) {
         return nombresVert.get(idNodo);
+    }
+
+    public int getCantVert() {
+        return cantVert;
     }
 
     public List<List<Arista>> getAdj() {
