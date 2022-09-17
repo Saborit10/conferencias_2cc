@@ -6,24 +6,12 @@ public class Main {
     public static void main(String[] args) throws Exception{
 
         GrafoListaAdy G = new GrafoListaAdy();
-
-      /*  G.insArista("A", "B");
-        G.insArista("B", "A");
-
-        G.insArista("A", "D");
-        G.insArista("D", "A");
-
-        G.insArista("A", "C");
-        G.insArista("C", "A");
-
-        G.insArista("B", "C");
-        G.insArista("C", "B");
-
-        G.insArista("B", "E");
-        G.insArista("E", "B");
-
-        G.insArista("C", "E");
-        G.insArista("E", "C");*/
+        G.insVertice("A");
+        G.insVertice("B");
+        G.insVertice("C");
+        G.insVertice("D");
+        G.insVertice("E");
+        G.insVertice("F");
 
         G.insArista("A", "B");
         G.insArista("A", "C");
@@ -40,33 +28,47 @@ public class Main {
 
         ArrayList<Integer> a = new ArrayList<>(G.recorridoProfundidad("A"));
 
-        for(int i=0; i < a.size(); i++){
-            System.out.print(G.getNombre(a.get(i)) + " ");
-        }
-        System.out.println();
+//        for(int i=0; i < a.size(); i++){
+//            System.out.print(G.getNombre(a.get(i)) + " ");
+//        }
+        System.out.println(G.getNombresVert());
 
-        //G.elimVertice("C");
-
-        /*System.out.println(G.getNombresVert());
-
-        for(int i=0; i< G.getCantVert(); i++){
+        for(int i=0; i < G.getCantVert(); i++){
             System.out.print(G.getNombre(i) + ": ");
 
             Iterator it = G.getAdj().get(i).iterator();
             while( it.hasNext() ){
                 int id = ((Arista)it.next()).getDestino();
-                //System.out.printf("(%d) | ", id);
+//                System.out.printf("(%d) | ", id);
                 System.out.printf("%s (%d) | ", G.getNombre(id), id);
             }
             System.out.println();
-        }*/
-
-        a = new ArrayList<>(G.recorridoAmplitud("A"));
-
-        for(int i=0; i < a.size(); i++){
-            System.out.print(G.getNombre(a.get(i)) + " ");
         }
+
         System.out.println();
+
+        G.elimVertice("C");
+
+        System.out.println(G.getNombresVert());
+
+        for(int i=0; i < G.getCantVert(); i++){
+            System.out.print(G.getNombre(i) + ": ");
+
+            Iterator it = G.getAdj().get(i).iterator();
+            while( it.hasNext() ){
+                int id = ((Arista)it.next()).getDestino();
+//                System.out.printf("(%d) | ", id);
+                System.out.printf("%s (%d) | ", G.getNombre(id), id);
+            }
+            System.out.println();
+        }
+
+//        a = new ArrayList<>(G.recorridoAmplitud("A"));
+//
+//        for(int i=0; i < a.size(); i++){
+//            System.out.print(G.getNombre(a.get(i)) + " ");
+//        }
+//        System.out.println();
 
 
     }

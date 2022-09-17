@@ -1,0 +1,7 @@
+Supongamos que se nos da un arreglo \texttt{A} de largo $n$. Ahora nos dan dos enteros $a$ y $b$ y nos piden calcular la suma de los elementos en el subarreglo desde la posici\'on $a$ hasta la posici\'on $b$, o sea, la suma de los elementos del arreglo en el rango $[a, b]$.
+
+La soluci\'on ser\'ia recorrer los elementos del arreglo \texttt{A} que est\'an entre las posiciones $a$ y $b$, y acumular su suma. La complejidad temporal de este procedimiento ser\'ia $O(n)$, en el peor caso. 
+
+Pero que pasar\'ia si, dado el arreglo, en vez de preguntarnos una vez la suma de un rango, nos hicieran $m$ preguntas con rangos diferentes. La complejidad temporal necesaria para responder las $m$ preguntas ser\'ia $O(n \cdot m)$.
+
+Vamos a tratar de responder las $m$ preguntas m\'as r\'apido, o sea, en una complejidad menor que $O(n \cdot m)$.

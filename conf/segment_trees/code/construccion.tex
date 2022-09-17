@@ -1,0 +1,27 @@
+Antes de construir un segment tree, debemos decidir dos cosas:
+\begin{itemize}
+    \item{
+        El \textit{valor} que se guarda en cada nodo. Por ejemplo, para un
+        segment tree de suma, guardamos la suma en el rango correspondiente al nodo.
+    }
+    \item{
+        La operaci\'on que mezcla dos nodos hijos para obtener el resultado del
+        nodo padre. En el caso de la suma, se puede simplemente sumar los resultados de los hijos
+        para obtener la suma en el padre.
+    }
+\end{itemize}
+
+Decidir estos dos elementos puede parecer trivial pero, en usos m\'as avanzados de la
+estructura, no lo es.
+
+Para construir el segment tree utilizamos una funci\'on recursiva \texttt{build()},
+comenzamos en la ra\'iz del arbol (nodo $1$ en el arreglo).
+Si el intervalo del nodo actual cubre m\'as de un elemento, entonces podemos calcular su resultado
+como la combinaci\'on de los resultados de sus hijos (en el caso del segment tree de suma, la suma;
+en el de m\'inimo, el m\'inimo de los dos resultados de los hijos). Ahora llamamos recursivamente a
+la funci\'on \texttt{build()} para calcular el resultado de los hijos. Si llegamos a un nodo cuyo
+intervalo solo contiene una posicion (un nodo hoja), directamente le asignamos el resultado al nodo
+y lo devolvemos.
+
+La complejidad temporal de este procedimiento es $O(n)$. Cada nodo se visita una vez y la cantidad
+de nodos en el segment tree es a lo m\'as $2\cdot n -1$.

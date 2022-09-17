@@ -1,0 +1,40 @@
+\begin{itemize}
+    \item{
+        Llamaremos segmentos coincidentes (SC) a aquellas subcadenas que 
+        coinciden con un prefijo de la cadena $S$.
+    }
+    \item{Mantenemos un intervalo $[l, r]$ que representa el segmento 
+        coincidente que termina mas a la derecha. El \'indice $r$ puede 
+        verse tambien como el l\'imite hasta el cual la cadena ha sido 
+        explorada.
+    }
+
+    \item{
+        Hacemos un ciclo de $1$ a $n$ ($n$, largo de la cadena). Para 
+        cada posicion $i$ tenemos dos casos:
+        \begin{itemize}
+            \item{
+                Si $i>r$: La posicion actual esta fuera de los limites 
+                de lo que ya hemos procesado. Calcularemos $z[i]$ comparando 
+                los valores uno por uno. Al final, si $z [ i ] >0$ tenemos 
+                que actulizar los limites de $[ l ,r ]$ porque esta garantizado 
+                que el nuevo $r =i+ z [ i ] - 1$ es mejor que el $r$ actual. 
+                El limite $l$ se actualiza a la posicion actual.
+            }
+            \item{
+                Si $i \leq r$: la posicion actual esta dentro de los limites 
+                del actual SC. Podemos usar los valores de $z$ ya calculados.
+                Observese que las subcadenas $s [ l... r ]$ y $s [ 0... r - l ]$ 
+                coinciden. Esto significa que podemos tomar como una aproximacion 
+                inicial para $z [ i ]$, el valor correspondiente en el segmento 
+                ya calculado. Este valor es $z [ i - l ]$ , aunque puede ser 
+                demasiado largo porque cuando se aplique a la posicion $i$, 
+                puede exceder el indice $r$ y no sabemos nada de los caracteres 
+                m\'as alla de $r$. Por lo tanto, tomamos 
+                $min ( r - i+1, z [ i - l ] )$ . Luego de inicializar $z [ i ]$ 
+                tratamos de coincidir los caracteres en las posiciones $z [ i ]$ 
+                y $i+ z [ i ]$ uno por uno.
+            }
+        \end{itemize}    
+    }
+\end{itemize}

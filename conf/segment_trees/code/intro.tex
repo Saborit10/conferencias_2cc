@@ -1,0 +1,40 @@
+Un \textit{segment tree}, o \'arbol de segmentos, es una estructura de datos que permite responder a consultas en rangos de forma r\'apida. Por ejemplo, nos permite calcular cu\'al es el m\'inimo en un rango, o cu\'al es la suma de los elementos de un rango, en un tiempo proporcional a $O(\log n)$.
+
+Adem\'as, la estructura es capaz de actualizar un elemento del arreglo y luego seguir respondiendo consultas en rangos. A la ope\-ra\-ci\'on de actualizar un elemento en una posici\'on, se le conoce como \textit{point update} o actualizaci\'on de posici\'on.\\
+
+\noindent Tipo de Datos Abstracto \textit{Segment Tree}:
+%~ Tabla
+        \begin{center}
+        
+        \begin{tabular}{|p{2.0cm}|p{4cm}|p{1.8cm}|}    
+        
+        \hline
+        
+        Operaci\'on &
+        Descripci\'on &
+        Complejidad \\
+            
+        \hline
+        
+        Construcci\'on{} & 
+        Se construye el Segment Tree a partir de un arreglo inicial. &
+        $O(n)$\\
+        
+        \hline
+        
+        Consulta en Rango &
+        
+        Se calcula el resultado de la consulta en rango. Por ejemplo, el m\'inimo, la suma, etc. &
+        
+        $O(\log n)$ \\
+        
+        \hline
+        
+        Actualizaci\'on de posici\'on &
+        Se actualiza el valor de una posici\'on. &
+        $O(\log n)$ \\
+        
+        \hline
+            
+        \end{tabular}    
+        \end{center}

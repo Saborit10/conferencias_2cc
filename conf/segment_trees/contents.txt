@@ -1,0 +1,16 @@
+[Descripci\'on de la Clase]
+clase.tex	Sumario
+
+[El problema]
+motivacion.tex	Motivaci\'on
+
+[La Estructura de Datos]
+intro.tex	Introducci\'on a la Estructura
+description.tex	Descripci\'on de un Segment Tree
+construccion.tex	Construcci\'on de un Segment Tree
+query.tex	Consultas en Rangos
+update.tex	Actualizaciones de Posici\'on
+impl.tex	Implementaci\'on
+
+[Conclusiones]
+aplicaciones.tex	Ventajas y Aplicaciones

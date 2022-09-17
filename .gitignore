@@ -1,1 +1,9 @@
 code/grafos/out
+*.pdf
+*.aux
+*.toc
+*.out
+*.log
+*.fdb_latexmk
+*.fls
+

@@ -67,22 +67,25 @@ public class GrafoListaAdy implements Grafo {
             }
         }
         nombresVert = tmpNombresVert;
-        cantVert--;
 
-        for (int i = 0; i < nombresVert.size(); i++) {
+        for (int i = 0; i < cantVert; i++) {
             if (i != idNodo) {
                 tmpAdj.add(new LinkedList<>());
 
-                Iterator it = adj.get(i).iterator();
-                while (it.hasNext()) {
-                    Arista arista = (Arista) it.next();
+                for (Arista arista: adj.get(i)){
+                    int idDestino = arista.getDestino();
 
-                    if (arista.getDestino() != idNodo)
+                    if (idDestino != idNodo){
+                        if(idDestino >= idNodo){
+                            arista.setDestino(idDestino - 1);
+                        }
                         tmpAdj.get(tmpAdj.size() - 1).add(arista);
+                    }
                 }
             }
         }
-        tmpAdj = tmpAdj;
+        adj = tmpAdj;
+        cantVert--;
     }
 
     @Override

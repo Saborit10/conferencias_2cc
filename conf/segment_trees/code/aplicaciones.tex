@@ -1,0 +1,14 @@
+Para resolver el problema de las consultas en rango con actualizaciones de posici\'on de forma ingenua, o sea recorriendo todos los elementos del rango en cada consulta se requiere un costo computacional mayor que para resolverlo con un segment tree. Pero ?`cu\'an grande es la mejora? 
+
+Supongamos que el largo de nuestro arreglo es $n$ y que deseamos hacer $m$ operaciones, entre consultas y actualizaciosnes. Para que una computadora moderna pueda hacer todas las operaciones en un segundo, el producto $n \cdot m$ no puede ser mayor que $10^8$. Un posible caso ser\'ia $n = 10000$ y $m = 10000$. Estas cantidades son aproximadas y dependen del \textit{hardware} de la m\'aquina.
+
+Usando un segment tree se pueden realizar en un segundo apro\-xi\-ma\-da\-men\-te $10^5$ operaciones en un arreglo de hasta un mill\'on de elementos. \\
+
+\noindent \textit{?`Qu\'e m\'as podemos hacer con un segment tree?} \\
+Esta estructura es muy flexible. Recordemos que lo que se puede hacer con ella depende de lo que guardemos en cada nodo y de la forma de combinar esos resultados. 
+
+Existen aplicaciones donde se guarda en los nodos del segment tree un arreglo o un \'arbol binario como el AVL. Incluso en un nodo puede guardarse otro segment tree. 
+
+Las aplicaciones b\'asicas incluyen responder el m\'aximo en un rango, m\'inimo, el m\'aximo com\'un divisor, la suma, el producto, entre otras. Pero existen aplicaciones en las que podemos responder cu\'antos elementos diferentes hay en un rango o cu\'al es la mayor subsecuencia creciente.
+
+Incluso podemos responder consultas en un rango de dos dimensiones (o sea, un rect\'angulo) de una matriz. O hacer consultas en rango de una versi\'on vieja de un segment tree, despu\'es de haberlo modificado con varias actualizaciones de posici\'on. 
