@@ -33,35 +33,13 @@ public class Main {
 //        }
         System.out.println(G.getNombresVert());
 
-        for(int i=0; i < G.getCantVert(); i++){
-            System.out.print(G.getNombre(i) + ": ");
-
-            Iterator it = G.getAdj().get(i).iterator();
-            while( it.hasNext() ){
-                int id = ((Arista)it.next()).getDestino();
-//                System.out.printf("(%d) | ", id);
-                System.out.printf("%s (%d) | ", G.getNombre(id), id);
-            }
-            System.out.println();
-        }
+        G.imprimirListaAdyacencia();
 
         System.out.println();
 
         G.elimVertice("C");
 
-        System.out.println(G.getNombresVert());
-
-        for(int i=0; i < G.getCantVert(); i++){
-            System.out.print(G.getNombre(i) + ": ");
-
-            Iterator it = G.getAdj().get(i).iterator();
-            while( it.hasNext() ){
-                int id = ((Arista)it.next()).getDestino();
-//                System.out.printf("(%d) | ", id);
-                System.out.printf("%s (%d) | ", G.getNombre(id), id);
-            }
-            System.out.println();
-        }
+        G.imprimirListaAdyacencia();
 
 //        a = new ArrayList<>(G.recorridoAmplitud("A"));
 //

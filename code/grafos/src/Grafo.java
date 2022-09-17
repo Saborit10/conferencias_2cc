@@ -71,4 +71,14 @@ public interface Grafo {
      * @return Retorna una lista con los ids de los vertices, en el orden en que se recorrieron
      */
     List recorridoProfundidad(String verticeOrigen) throws VerticeNoEncontradoException;
+
+    List caminoMSinPesos(String VerticeOrigen);
+
+    List caminoMConPesosPositivosGrafoDenso(String VerticeOrigen);
+
+    List caminoMConPesosPositivos(String VerticeOrigen);
+
+    List caminoMConPesosNegativos(String VerticeOrigen);
+
+    List caminoMAciclico(String verticeO);
 }

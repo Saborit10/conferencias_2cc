@@ -151,6 +151,33 @@ public class GrafoListaAdy implements Grafo {
         return orden;
     }
 
+    @Override
+    public List caminoMSinPesos(String VerticeOrigen) {
+        return null;
+    }
+
+    @Override
+    public List caminoMConPesosPositivosGrafoDenso(String VerticeOrigen) {
+        List<Float> dist = new ArrayList<>(cantVert);
+
+
+    }
+
+    @Override
+    public List caminoMConPesosPositivos(String VerticeOrigen) {
+        return null;
+    }
+
+    @Override
+    public List caminoMConPesosNegativos(String VerticeOrigen) {
+        return null;
+    }
+
+    @Override
+    public List caminoMAciclico(String verticeO) {
+        return null;
+    }
+
     private void recorridoProfundidadRecursivo(int idNodo, List<Integer> orden, boolean[] marca) {
         marca[idNodo] = true;
         orden.add(idNodo);
@@ -180,4 +207,16 @@ public class GrafoListaAdy implements Grafo {
         return nombresVert;
     }
 
+    /* Helper Method */
+    public void imprimirListaAdyacencia(){
+        for(int i=0; i < cantVert; i++){
+            System.out.printf("%s (%d) => ", nombresVert.get(i), i);
+
+            for(Arista arista: adj.get(i)){
+                int destino = arista.getDestino();
+                System.out.printf("%s (%d) | ",     nombresVert.get(destino), destino);
+            }
+            System.out.println();
+        }
+    }
 }
