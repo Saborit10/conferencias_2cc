@@ -1,6 +1,127 @@
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import java.util.*;
 
-public class GrafoListaAdy implements Grafo {
+import java.util.List;
+
+class VerticeNoEncontradoException extends Exception {
+}
+
+
+class Arista {
+    private int destino;
+    private float peso;
+
+    public Arista(int destino, float peso) {
+        this.destino = destino;
+        this.peso = peso;
+    }
+
+    public int getDestino() {
+        return destino;
+    }
+
+    public void setDestino(int destino) {
+        this.destino = destino;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+}
+
+
+interface Grafo {
+    /**
+     * Inserta un nodo en el grafo, si no existe
+     * @param nombre Este es el nombre del nodo
+     * @return Retorna el id del nodo
+     */
+    int insVertice(String nombre);
+
+    /**
+     * Agrega una arista CON peso en el grafo
+     * @param origen Este es el nodo origen de la arista
+     * @param destino Este es el nodo final de la arista
+     * @param peso Este es el peso de la arista
+     */
+    void insArista(String origen, String destino, float peso);
+
+    /**
+     * Agrega una arista SIN peso en el grafo
+     * @param origen Este es el nodo origen de la arista
+     * @param destino Este es el nodo final de la arista
+     */
+    void insArista(String origen, String destino);
+
+    /**
+     * Elimina un nodo del grafo
+     * @param nombre Este es el nombre del grafo
+     */
+    void elimVertice(String nombre) throws VerticeNoEncontradoException;
+
+    /**
+     * Elimina una arista del grafo
+     * @param origen Este es el nodo origen de la arista
+     * @param destino Este es el nodo final de la arista
+     */
+    void elimArista(String origen, String destino) throws VerticeNoEncontradoException;
+
+    /**
+     * Busca el id de un vertice
+     * @param nombre Este es el nombre del vertice
+     * @return Retorna el id del vertice buscado
+     */
+    int buscar(String nombre) throws VerticeNoEncontradoException;
+
+    /**
+     * Retorna el nombre de un nodo, dado el id
+     * @param id Identificador del nodo
+     * @return Retorna una cadena con el nombre del nodo
+     */
+    String getNombre(int idNodo);
+
+    /**
+     * Comprueba que dos nodos estan unidos por una arista
+     * @param origen Nodo origen
+     * @param destino Nodo final
+     * @return Retorna true si los nodos estan unidos por una arista. En caso contrario retorna falso.
+     */
+    boolean esAdyacente(String origen, String destino) throws VerticeNoEncontradoException;
+
+    /**
+     * Realiza un recorrido del primero a lo ancho, en el grafo
+     * @param verticeOrigen Vertice donde comineza el recorrido
+     * @return Retorna una lista con los ids de los vertices, en el orden en que se recorrieron
+     */
+    List recorridoAmplitud(String verticeOrigen) throws VerticeNoEncontradoException;
+
+    /**
+     * Realiza un recorrido del primero en profundidad, en el grafo
+     * @param verticeOrigen Vertice donde comineza el recorrido
+     * @return Retorna una lista con los ids de los vertices, en el orden en que se recorrieron
+     */
+    List recorridoProfundidad(String verticeOrigen) throws VerticeNoEncontradoException;
+
+    float[] caminoMSinPesos(String verticeOrigen);
+
+    float[] caminoMConPesosPositivosGrafoDenso(String verticeOrigen) throws VerticeNoEncontradoException;
+
+    float[] caminoMConPesosPositivos(String verticeOrigen);
+
+    float[] caminoMConPesosNegativos(String verticeOrigen);
+
+    float[] caminoMAciclico(String verticeOrigen);
+}
+
+class GrafoListaAdy implements Grafo {
     /* Constante que representa el vaor infinito */
     private final float INF = Float.MAX_VALUE;
 
@@ -115,7 +236,7 @@ public class GrafoListaAdy implements Grafo {
 
         for(Arista arista: adj.get(idOrigen)){
             if (arista.getDestino() == idDestino)
-                return true;            
+                return true;
         }
         return false;
     }
@@ -159,13 +280,6 @@ public class GrafoListaAdy implements Grafo {
         return null;
     }
 
-    /**
-     * Algoritmo de Dijkstra en O(|V|^2)
-     * @param verticeOrigen Es el vertice desde donde se calculan los caminos minimos
-     * @return Retorna un arreglo de tipo float con las distancias desde verticeOrigen hasta cada uno de los nodos.
-     * @throws VerticeNoEncontradoException
-     * Tested on: https://dmoj.uclv.cu/problem/bparty
-     */
     @Override
     public float[] caminoMConPesosPositivosGrafoDenso(String verticeOrigen) throws VerticeNoEncontradoException {
         int idOrigen = buscar(verticeOrigen);
@@ -251,5 +365,37 @@ public class GrafoListaAdy implements Grafo {
             }
             System.out.println();
         }
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) throws Exception{
+        Scanner f = new Scanner(System.in);
+
+        GrafoListaAdy G = new GrafoListaAdy();
+
+        int cn = f.nextInt();
+        int ca = f.nextInt();
+        int ni = f.nextInt();
+
+        for(int i=0; i < ca; i++){
+            int a = f.nextInt();
+            int b = f.nextInt();
+            int c = f.nextInt();
+
+            G.insArista("" + a, "" + b, c);
+            G.insArista("" + b, "" + a, c);
+
+        }
+
+        float[] dist = G.caminoMConPesosPositivosGrafoDenso("" + ni);
+
+        float sol = 0;
+        for(int i=0; i < cn; i++)
+            if( sol < dist[i] )
+                sol = dist[i];
+
+        System.out.println(2 * (int)sol);
     }
 }

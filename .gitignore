@@ -6,4 +6,4 @@ code/grafos/out
 *.log
 *.fdb_latexmk
 *.fls
-
+*.class
