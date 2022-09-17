@@ -1,6 +1,9 @@
 import java.util.*;
 
 public class GrafoListaAdy implements Grafo {
+    /* Constante que representa el vaor infinito */
+    private final float INF = Float.MAX_VALUE;
+
     /* Cantidad de Vertices */
     private int cantVert;
 
@@ -152,29 +155,52 @@ public class GrafoListaAdy implements Grafo {
     }
 
     @Override
-    public List caminoMSinPesos(String VerticeOrigen) {
+    public float[] caminoMSinPesos(String verticeOrigen) {
         return null;
     }
 
     @Override
-    public List caminoMConPesosPositivosGrafoDenso(String VerticeOrigen) {
-        List<Float> dist = new ArrayList<>(cantVert);
+    public float[] caminoMConPesosPositivosGrafoDenso(String verticeOrigen) throws VerticeNoEncontradoException {
+        int idOrigen = buscar(verticeOrigen);
+        float[] dist = new float[cantVert];
+        boolean[] marca = new boolean[cantVert];
 
+        for(int i=0; i < cantVert; i++)
+            dist[i] = INF;
+        dist[idOrigen] = 0;
 
+        for (int i=0; i < cantVert; i++){
+            int nod = -1;
+
+            for(int j=0; j < cantVert; j++){
+                if( !marca[nod] && (nod == -1 || dist[j] < dist[nod]) )
+                    nod = j;
+            }
+            marca[nod] = true;
+
+            for(Arista arista: adj.get(nod)){
+                int destino = arista.getDestino();
+                float peso = arista.getPeso();
+
+                if( dist[destino] > dist[nod] + peso )
+                    dist[destino] = dist[nod] + peso;
+            }
+        }
+        return dist;
     }
 
     @Override
-    public List caminoMConPesosPositivos(String VerticeOrigen) {
+    public float[] caminoMConPesosPositivos(String verticeOrigen) {
         return null;
     }
 
     @Override
-    public List caminoMConPesosNegativos(String VerticeOrigen) {
+    public float[] caminoMConPesosNegativos(String verticeOrigen) {
         return null;
     }
 
     @Override
-    public List caminoMAciclico(String verticeO) {
+    public float[] caminoMAciclico(String verticeOrigen) {
         return null;
     }
 

@@ -72,13 +72,13 @@ public interface Grafo {
      */
     List recorridoProfundidad(String verticeOrigen) throws VerticeNoEncontradoException;
 
-    List caminoMSinPesos(String VerticeOrigen);
+    float[] caminoMSinPesos(String verticeOrigen);
 
-    List caminoMConPesosPositivosGrafoDenso(String VerticeOrigen);
+    float[] caminoMConPesosPositivosGrafoDenso(String verticeOrigen) throws VerticeNoEncontradoException;
 
-    List caminoMConPesosPositivos(String VerticeOrigen);
+    float[] caminoMConPesosPositivos(String verticeOrigen);
 
-    List caminoMConPesosNegativos(String VerticeOrigen);
+    float[] caminoMConPesosNegativos(String verticeOrigen);
 
-    List caminoMAciclico(String verticeO);
+    float[] caminoMAciclico(String verticeOrigen);
 }
