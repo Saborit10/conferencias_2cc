@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,8 @@ class VerticeNoEncontradoException extends Exception {
 
 
 class Arista {
-    private int destino;
-    private float peso;
+    protected int destino;
+    protected float peso;
 
     public Arista(int destino, float peso) {
         this.destino = destino;
@@ -36,6 +35,25 @@ class Arista {
         this.peso = peso;
     }
 }
+
+class Camino extends Arista implements Comparable<Camino>{
+    private final static float EPS = 1e-9f;
+
+    public Camino(int destino, float peso) {
+        super(destino, peso);
+    }
+
+    @Override
+    public int compareTo(Camino camino) {
+        if( Math.abs(this.peso - camino.peso) < EPS )
+            return 0;
+        else if( this.peso < camino.peso )
+            return -1;
+        else
+            return 1;
+    }
+}
+
 
 
 interface Grafo {
@@ -114,9 +132,9 @@ interface Grafo {
 
     float[] caminoMConPesosPositivosGrafoDenso(String verticeOrigen) throws VerticeNoEncontradoException;
 
-    float[] caminoMConPesosPositivos(String verticeOrigen);
+    float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException;
 
-    float[] caminoMConPesosNegativos(String verticeOrigen);
+    float[] caminoMConPesosNegativos(String verticeOrigen) throws VerticeNoEncontradoException;
 
     float[] caminoMAciclico(String verticeOrigen);
 }
@@ -310,11 +328,32 @@ class GrafoListaAdy implements Grafo {
         return dist;
     }
 
-    @Override
-    public float[] caminoMConPesosPositivos(String verticeOrigen) {
-        return null;
-    }
+    public float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException {
+        int idOrigen = buscar(verticeOrigen);
+        float[] dist = new float[cantVert];
+        PriorityQueue<Camino> Q = new PriorityQueue<>();
 
+        for(int i=0; i < cantVert; i++)
+            dist[i] = INF;
+        dist[idOrigen] = 0;
+
+        Q.add(new Camino(idOrigen, 0f));
+        while( !Q.isEmpty() ){
+            int nod = Q.poll().getDestino();
+
+            for(Arista arista: adj.get(nod)){
+                int destino = arista.getDestino();
+                float peso = arista.getPeso();
+
+                if( dist[destino] > dist[nod] + peso ){
+                    dist[destino] = dist[nod] + peso;
+                    Q.add(new Camino(destino, dist[destino]));
+                }
+            }
+        }
+        return dist;
+    }
+    
     @Override
     public float[] caminoMConPesosNegativos(String verticeOrigen) {
         return null;
@@ -389,7 +428,7 @@ public class Main {
 
         }
 
-        float[] dist = G.caminoMConPesosPositivosGrafoDenso("" + ni);
+        float[] dist = G.caminoMConPesosPositivos("" + ni);
 
         float sol = 0;
         for(int i=0; i < cn; i++)

@@ -1,6 +1,6 @@
 public class Arista {
-    private int destino;
-    private float peso;
+    protected int destino;
+    protected float peso;
 
     public Arista(int destino, float peso) {
         this.destino = destino;

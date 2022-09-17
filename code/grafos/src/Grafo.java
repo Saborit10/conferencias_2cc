@@ -76,7 +76,7 @@ public interface Grafo {
 
     float[] caminoMConPesosPositivosGrafoDenso(String verticeOrigen) throws VerticeNoEncontradoException;
 
-    float[] caminoMConPesosPositivos(String verticeOrigen);
+    float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException;
 
     float[] caminoMConPesosNegativos(String verticeOrigen);
 

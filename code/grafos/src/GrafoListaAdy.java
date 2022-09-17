@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class GrafoListaAdy implements Grafo {
-    /* Constante que representa el vaor infinito */
-    private final float INF = Float.MAX_VALUE;
+    /* Constante que representa el valor infinito */
+    private final static float INF = Float.MAX_VALUE;
 
     /* Cantidad de Vertices */
     private int cantVert;
@@ -197,8 +197,30 @@ public class GrafoListaAdy implements Grafo {
     }
 
     @Override
-    public float[] caminoMConPesosPositivos(String verticeOrigen) {
-        return null;
+    public float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException {
+        int idOrigen = buscar(verticeOrigen);
+        float[] dist = new float[cantVert];
+        PriorityQueue<Camino> Q = new PriorityQueue<>();
+
+        for(int i=0; i < cantVert; i++)
+            dist[i] = INF;
+        dist[idOrigen] = 0;
+
+        Q.add(new Camino(idOrigen, 0f));
+        while( !Q.isEmpty() ){
+            int nod = Q.poll().getDestino();
+
+            for(Arista arista: adj.get(nod)){
+                int destino = arista.getDestino();
+                float peso = arista.getPeso();
+
+                if( dist[destino] > dist[nod] + peso ){
+                    dist[destino] = dist[nod] + peso;
+                    Q.add(new Camino(destino, dist[destino]));
+                }
+            }
+        }
+        return dist;
     }
 
     @Override
