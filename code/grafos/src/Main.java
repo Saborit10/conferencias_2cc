@@ -31,6 +31,7 @@ public class Main {
 //        for(int i=0; i < a.size(); i++){
 //            System.out.print(G.getNombre(a.get(i)) + " ");
 //        }
+
         System.out.println(G.getNombresVert());
 
         G.imprimirListaAdyacencia();

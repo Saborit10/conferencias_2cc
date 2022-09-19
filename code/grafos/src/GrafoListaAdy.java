@@ -208,7 +208,13 @@ public class GrafoListaAdy implements Grafo {
 
         Q.add(new Camino(idOrigen, 0f));
         while( !Q.isEmpty() ){
-            int nod = Q.poll().getDestino();
+            int nod = Q.peek().getDestino();
+
+            if( dist[nod] < Q.peek().getPeso() ){
+                Q.poll();
+                continue;
+            }
+            Q.poll();
 
             for(Arista arista: adj.get(nod)){
                 int destino = arista.getDestino();
