@@ -38,7 +38,7 @@ public class Main {
 
         System.out.println();
 
-        G.elimVertice("C");
+//        G.elimVertice("C");
 
         G.imprimirListaAdyacencia();
 
@@ -49,6 +49,7 @@ public class Main {
 //        }
 //        System.out.println();
 
-
+        System.out.println(G.gradoEntrada("E"));
+        System.out.println(G.gradoSalida("E"));
     }
 }

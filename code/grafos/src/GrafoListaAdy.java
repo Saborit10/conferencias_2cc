@@ -229,6 +229,25 @@ public class GrafoListaAdy implements Grafo {
         return dist;
     }
 
+    int gradoSalida(String vertice) throws VerticeNoEncontradoException {
+        int idNodo = buscar(vertice);
+
+        return adj.get(idNodo).size();
+    }
+
+    int gradoEntrada(String vertice) throws VerticeNoEncontradoException {
+        int idNodo = buscar(vertice);
+
+        int grado = 0;
+        for(int i=0; i < cantVert; i++){
+            for(Arista arista: adj.get(i)){
+                if( arista.getDestino() == idNodo )
+                    grado++;
+            }
+        }
+        return grado;
+    }
+
     @Override
     public float[] caminoMConPesosNegativos(String verticeOrigen) {
         return null;

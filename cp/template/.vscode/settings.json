@@ -1,0 +1,6 @@
+{
+    "prolog.format.insertSpaces": false,
+    "python.analysis.cacheFolderPath": "/home/luis/.cache/vsc_python",
+    "python.formatting.autopep8Path": "/home/luis/.config/sublime-text-3/Packages/Anaconda/anaconda_lib/autopep",
+    "python.pythonPath": "/usr/bin/python3"
+}

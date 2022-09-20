@@ -1,0 +1,468 @@
+\documentclass[a4paper, 10pt]{article}
+\usepackage[left=0.4in,right=0.4in,top=0.7in,bottom=0.4in]{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tocloft}
+\usepackage{pdflscape}
+\usepackage{multicol}
+\usepackage{amssymb,mathtools,amsthm}
+\usepackage{cleveref}
+\usepackage{amsmath}
+\usepackage{graphicx} % Required for including pictures
+% \graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
+
+\usepackage{amssymb,mathtools,amsthm}
+% \usepackage{cleveref}
+\usepackage{amsmath}
+
+\graphicspath{{Pictures/}} % Specifies the directory where pictures are stored
+
+% \usepackage{lipsum} % Inserts dummy text
+
+\usepackage{tikz} % Required for drawing custom shapes
+
+\usepackage[english]{babel} % English language/hyphenation
+
+\usepackage{enumitem} % Customize lists
+\setlist{nolistsep} % Reduce spacing between bullet points and numbered lists
+
+\usepackage{booktabs} % Required for nicer horizontal rules in tables
+
+\usepackage{xcolor} % Required for specifying colors by name
+\definecolor{violet}{RGB}{113,114,217} % Define the orange color used for highlighting throughout the book
+% \definecolor{violet}{RGB}{11,14,205} % Define the orange color used for highlighting throughout the book
+
+%----------------------------------------------------------------------------------------
+%   MARGINS
+%----------------------------------------------------------------------------------------
+
+% \usepackage{geometry} % Required for adjusting page dimensions and margins
+
+% \geometry{
+%   paper=a4paper, % Paper size, change to letterpaper for US letter size
+%   top=3cm, % Top margin
+%   bottom=3cm, % Bottom margin
+%   left=3cm, % Left margin
+%   right=3cm, % Right margin
+%   headheight=14pt, % Header height
+%   footskip=1.4cm, % Space from the bottom margin to the baseline of the footer
+%   headsep=10pt, % Space from the top margin to the baseline of the header
+%   %showframe, % Uncomment to show how the type block is set on the page
+% }
+
+%----------------------------------------------------------------------------------------
+%   FONTS
+%----------------------------------------------------------------------------------------
+
+\usepackage{avant} % Use the Avantgarde font for headings
+%\usepackage{times} % Use the Times font for headings
+\usepackage{mathptmx} % Use the Adobe Times Roman as the default text font together with math symbols from the Sym­bol, Chancery and Com­puter Modern fonts
+
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+\usepackage[utf8]{inputenc} % Required for including letters with accents
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+
+%----------------------------------------------------------------------------------------
+%   BIBLIOGRAPHY AND INDEX
+%----------------------------------------------------------------------------------------
+
+% \usepackage[style=numeric,citestyle=numeric,sorting=nyt,sortcites=true,autopunct=true,babel=hyphen,hyperref=true,abbreviate=false,backref=true,backend=biber]{biblatex}
+% \addbibresource{bibliography.bib} % BibTeX bibliography file
+% \defbibheading{bibempty}{}
+
+% \usepackage{calc} % For simpler calculation - used for spacing the index letter headings correctly
+% \usepackage{makeidx} % Required to make an index
+% \makeindex % Tells LaTeX to create the files required for indexing
+
+%----------------------------------------------------------------------------------------
+%   MAIN TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+\usepackage{titletoc} % Required for manipulating the table of contents
+
+\contentsmargin{0cm} % Removes the default margin
+
+% Part text styling (this is mostly taken care of in the PART HEADINGS section of this file)
+\titlecontents{part}
+    [0cm] % Left indentation
+    {\addvspace{20pt}\bfseries} % Spacing and font options for parts
+    {}
+    {}
+    {}
+
+% Chapter text styling
+\titlecontents{chapter}
+    [1.25cm] % Left indentation
+    {\addvspace{12pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+    {\color{violet!60}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{violet}} % Formatting of numbered sections of this type
+    {\color{violet}} % Formatting of numberless sections of this type
+    {\color{violet!60}\normalsize\;\titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+
+% Section text styling
+\titlecontents{section}
+    [1.25cm] % Left indentation
+    {\addvspace{3pt}\sffamily\bfseries} % Spacing and font options for sections
+    {\contentslabel[\thecontentslabel]{1.25cm}} % Formatting of numbered sections of this type
+    {} % Formatting of numberless sections of this type
+    {\hfill\color{black}\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+
+% Subsection text styling
+\titlecontents{subsection}
+    [1.25cm] % Left indentation
+    {\addvspace{1pt}\sffamily\small} % Spacing and font options for subsections
+    {\contentslabel[\thecontentslabel]{1.25cm}} % Formatting of numbered sections of this type
+    {} % Formatting of numberless sections of this type
+    {\ \titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+
+% Figure text styling
+\titlecontents{figure}
+    [1.25cm] % Left indentation
+    {\addvspace{1pt}\sffamily\small} % Spacing and font options for figures
+    {\thecontentslabel\hspace*{1em}} % Formatting of numbered sections of this type
+    {} % Formatting of numberless sections of this type
+    {\ \titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+
+% Table text styling
+\titlecontents{table}
+    [1.25cm] % Left indentation
+    {\addvspace{1pt}\sffamily\small} % Spacing and font options for tables
+    {\thecontentslabel\hspace*{1em}} % Formatting of numbered sections of this type
+    {} % Formatting of numberless sections of this type
+    {\ \titlerule*[.5pc]{.}\;\thecontentspage} % Formatting of the filler to the right of the heading and the page number
+
+%----------------------------------------------------------------------------------------
+%   MINI TABLE OF CONTENTS IN PART HEADS
+%----------------------------------------------------------------------------------------
+
+% Chapter text styling
+\titlecontents{lchapter}
+    [0em] % Left indentation
+    {\addvspace{15pt}\large\sffamily\bfseries} % Spacing and font options for chapters
+    {\color{violet}\contentslabel[\Large\thecontentslabel]{1.25cm}\color{violet}} % Chapter number
+    {}  
+    {\color{violet}\normalsize\sffamily\bfseries\;\titlerule*[.5pc]{.}\;\thecontentspage} % Page number
+
+% Section text styling
+\titlecontents{lsection}
+    [0em] % Left indentation
+    {\sffamily\small} % Spacing and font options for sections
+    {\contentslabel[\thecontentslabel]{1.25cm}} % Section number
+    {}
+    {}
+
+% Subsection text styling (note these aren't shown by default, display them by searchings this file for tocdepth and reading the commented text)
+\titlecontents{lsubsection}
+    [.5em] % Left indentation
+    {\sffamily\footnotesize} % Spacing and font options for subsections
+    {\contentslabel[\thecontentslabel]{1.25cm}}
+    {}
+    {}
+
+%----------------------------------------------------------------------------------------
+%   HEADERS AND FOOTERS
+%----------------------------------------------------------------------------------------
+
+\usepackage{fancyhdr} % Required for header and footer configuration
+
+\pagestyle{fancy} % Enable the custom headers and footers
+
+\renewcommand{\chaptermark}[1]{\markboth{\sffamily\normalsize\bfseries\chaptername\ \thechapter.\ #1}{}} % Styling for the current chapter in the header
+\renewcommand{\sectionmark}[1]{\markright{\sffamily\normalsize\thesection\hspace{5pt}#1}{}} % Styling for the current section in the header
+
+\fancyhf{} % Clear default headers and footers
+\fancyhead[LE,RO]{\sffamily\normalsize\thepage} % Styling for the page number in the header
+\fancyhead[LO]{\rightmark} % Print the nearest section name on the left side of odd pages
+\fancyhead[RE]{\leftmark} % Print the current chapter name on the right side of even pages
+%\fancyfoot[C]{\thepage} % Uncomment to include a footer
+
+\renewcommand{\headrulewidth}{0.5pt} % Thickness of the rule under the header
+
+\fancypagestyle{plain}{% Style for when a plain pagestyle is specified
+    \fancyhead{}\renewcommand{\headrulewidth}{0pt}%
+}
+
+% Removes the header from odd empty pages at the end of chapters
+\makeatletter
+\renewcommand{\cleardoublepage}{
+\clearpage\ifodd\c@page\else
+\hbox{}
+\vspace*{\fill}
+\thispagestyle{empty}
+\newpage
+\fi}
+
+%----------------------------------------------------------------------------------------
+%   THEOREM STYLES
+%----------------------------------------------------------------------------------------
+
+\usepackage{amsmath,amsfonts,amssymb,amsthm} % For math equations, theorems, symbols, etc
+
+\newcommand{\intoo}[2]{\mathopen{]}#1\,;#2\mathclose{[}}
+\newcommand{\ud}{\mathop{\mathrm{{}d}}\mathopen{}}
+\newcommand{\intff}[2]{\mathopen{[}#1\,;#2\mathclose{]}}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+\newtheorem{notation}{Notation}[section]
+
+% Boxed/framed environments
+\newtheoremstyle{violetnumbox}% Theorem style name
+{0pt}% Space above
+{0pt}% Space below
+{\normalfont}% Body font
+{}% Indent amount
+{\small\bf\sffamily\color{violet}}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\color{black}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+
+\newtheoremstyle{blacknumex}% Theorem style name
+{5pt}% Space above
+{5pt}% Space below
+{\normalfont}% Body font
+{} % Indent amount
+{\small\bf\sffamily}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily{\tiny\ensuremath{\blacksquare}}\nobreakspace\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}% Optional theorem note
+
+\newtheoremstyle{blacknumbox} % Theorem style name
+{0pt}% Space above
+{0pt}% Space below
+{\normalfont}% Body font
+{}% Indent amount
+{\small\bf\sffamily}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries---\nobreakspace#3.}}% Optional theorem note
+
+% Non-boxed/non-framed environments
+\newtheoremstyle{violetnum}% Theorem style name
+{5pt}% Space above
+{5pt}% Space below
+{\normalfont}% Body font
+{}% Indent amount
+{\small\bf\sffamily\color{violet}}% Theorem head font
+{\;}% Punctuation after theorem head
+{0.25em}% Space after theorem head
+{\small\sffamily\color{violet}\thmname{#1}\nobreakspace\thmnumber{\@ifnotempty{#1}{}\@upn{#2}}% Theorem text (e.g. Theorem 2.1)
+\thmnote{\nobreakspace\the\thm@notefont\sffamily\bfseries\color{black}---\nobreakspace#3.}} % Optional theorem note
+\makeatother
+
+% Defines the theorem text style for each type of theorem to one of the three styles above
+\newcounter{theoremCounter}
+\numberwithin{theoremCounter}{subsection}
+
+\newcounter{problemCounter}
+\numberwithin{problemCounter}{subsection}
+
+\newcounter{defCounter}
+\numberwithin{defCounter}{subsection}
+
+\newcounter{obsCounter}
+\numberwithin{obsCounter}{subsection}
+
+\newcounter{methCounter}
+\numberwithin{methCounter}{subsection}
+
+\newcounter{exampleCounter}
+\numberwithin{exampleCounter}{subsection}
+
+
+\newcounter{propCounter}
+\numberwithin{propCounter}{subsection}
+
+
+\theoremstyle{violetnumbox}
+
+\newtheorem{theoremeT}[theoremCounter]{Teorema}
+\newtheorem{problem}[obsCounter]{Observaci\'on}
+\newtheorem{exerciseT}{Problema}[problemCounter]
+\theoremstyle{blacknumex}
+\newtheorem{exampleT}[exampleCounter]{Ejemplo}
+% \theoremstyle{blacknumbox}
+% \newtheorem{vocabulary}{Vocabulary}[chapter]
+\newtheorem{definitionT}[defCounter]{Definici\'on}
+\newtheorem{propertyT}[propCounter]{Propiedad}
+\newtheorem{corollaryT}[methCounter]{M\'etodo}
+% \theoremstyle{violetnum}
+% \newtheorem{proposition}[dummy]{Proposition}
+
+%----------------------------------------------------------------------------------------
+%   DEFINITION OF COLORED BOXES
+%----------------------------------------------------------------------------------------
+
+\RequirePackage[framemethod=default]{mdframed} % Required for creating the theorem, definition, exercise and corollary boxes
+
+% Theorem box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+backgroundcolor=black!5,
+linecolor=violet,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+innerbottommargin=5pt]{tBox}
+
+% Exercise box    
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+backgroundcolor=violet!10,
+linecolor=violet,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+innerbottommargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt]{eBox}    
+
+% Definition box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=violet,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=0pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=0pt]{dBox}    
+
+% Corollary box
+\newmdenv[skipabove=7pt,
+skipbelow=7pt,
+rightline=false,
+leftline=true,
+topline=false,
+bottomline=false,
+linecolor=gray,
+backgroundcolor=black!5,
+innerleftmargin=5pt,
+innerrightmargin=5pt,
+innertopmargin=5pt,
+leftmargin=0cm,
+rightmargin=0cm,
+linewidth=4pt,
+innerbottommargin=5pt]{cBox}
+
+% % Creates an environment for each type of theorem and assigns it a theorem text style from the "Theorem Styles" section above and a colored box from above
+\newenvironment{theorem}{\begin{tBox}\begin{theoremeT}}{\end{theoremeT}\end{tBox}}
+\newenvironment{exercise}{\begin{eBox}\begin{exerciseT}}{\hfill{\color{violet}\tiny\ensuremath{\blacksquare}}\end{exerciseT}\end{eBox}}               
+\newenvironment{definition}{\begin{dBox}\begin{definitionT}}{\end{definitionT}\end{dBox}}   
+\newenvironment{example}{\begin{exampleT}}{\hfill{\tiny\ensuremath{\blacksquare}}\end{exampleT}}        
+\newenvironment{corollary}{\begin{cBox}\begin{corollaryT}}{\end{corollaryT}\end{cBox}}  
+
+\newenvironment{property}{\begin{dBox}\begin{propertyT}}{\end{propertyT}\end{dBox}}   
+
+
+% \renewcommand*{\ttdefault}{pcr}
+\renewcommand\cftsecfont{\fontsize{10}{11}\bfseries}
+\renewcommand\cftsecfont{\fontsize{8}{9}\bfseries}
+\renewcommand\cftsecpagefont{\fontsize{8}{9}\mdseries}
+\renewcommand\cftsecpagefont{\fontsize{10}{11}\mdseries}
+\renewcommand\cftsubsecfont{\fontsize{5}{6}\mdseries}
+\renewcommand\cftsubsecpagefont{\fontsize{5}{6}\mdseries}
+\renewcommand\cftsecafterpnum{\vspace{-1ex}}
+\renewcommand\cftsubsecafterpnum{\vspace{-1ex}}
+
+\lstdefinestyle{shared}{
+    belowcaptionskip=1\baselineskip,
+    breaklines=true,
+    xleftmargin=0ex,
+    showstringspaces=false,
+    basicstyle=\fontsize{7.6}{7.8}\ttfamily,
+}
+\lstdefinestyle{cpp}{
+    style=shared,
+    language=C++,
+    keywordstyle=\bfseries\color{purple!60!black},
+    commentstyle=\itshape\color{blue},
+    identifierstyle=\color{black},
+    stringstyle=\color{green!70!black},
+}
+\lstdefinestyle{java}{
+    style=shared,
+    language=Java,
+    keywordstyle=\bfseries\color{blue!60!black},
+    commentstyle=\color{red!80!black},
+    identifierstyle=\color{black},
+    stringstyle=\color{purple!60!black},
+}
+\lstdefinestyle{py}{
+    style=shared,
+    language=Python,
+    keywordstyle=\bfseries\color{green!40!black},
+    commentstyle=\itshape\color{purple!40!black},
+    identifierstyle=\color{blue},
+    stringstyle=\color{orange},
+}
+\lstdefinestyle{txt}{
+    style=shared,
+}
+
+\lstset{escapechar=@}
+
+\pagestyle{fancy}
+\fancyhead[L]{Universidad Central de Las Villas}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+
+\fancypagestyle{plain}
+{
+\fancyhead[L]{Universidad Central de Las Villas}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{}
+}
+
+\title{\vspace{30ex}\Large{ \texttt{Conferencia} \\ \textbf{} \\ \today}}
+\author{\textit{Luis Enrique Saborit Gonz\'alez}}
+\date{}
+
+\begin{document}
+% \begin{landscape}
+
+%~\vspace{5cm}
+
+\maketitle
+
+\vspace*{\fill}
+
+
+\begin{flushright}
+    \textit{
+       ccc    
+    }
+
+\vspace{3cm}
+
+\end{flushright}
+
+\newpage
+
+\begin{multicols}{2}
+
+
+
+\tableofcontents
+\newpage
+\pagestyle{fancy}
+
+\input contents.tex
+
+\end{multicols}
+% \end{landscape}
+\end{document}
