@@ -7,3 +7,5 @@ code/grafos/out
 *.fdb_latexmk
 *.fls
 *.class
+*.gz
+*.iml
