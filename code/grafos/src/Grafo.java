@@ -80,5 +80,5 @@ public interface Grafo {
 
     float[] caminoMConPesosNegativos(String verticeOrigen);
 
-    float[] caminoMAciclico(String verticeOrigen);
+    float[] caminoMAciclico(String verticeOrigen) throws CicleDetectedException, VerticeNoEncontradoException;
 }

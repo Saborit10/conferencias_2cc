@@ -55,7 +55,7 @@ public class GrafoListaAdy implements Grafo {
 
     @Override
     public void insArista(String origen, String destino) {
-        insArista(origen, destino, 0);
+        insArista(origen, destino, 1);
     }
 
     @Override
@@ -196,6 +196,8 @@ public class GrafoListaAdy implements Grafo {
         return dist;
     }
 
+    // TODO: Agregar el metodo Bellman-Ford
+
     @Override
     public float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException {
         int idOrigen = buscar(verticeOrigen);
@@ -235,8 +237,6 @@ public class GrafoListaAdy implements Grafo {
         return adj.get(idNodo).size();
     }
 
-    // TODO: Agregar el metodo Bellman-Ford
-
     int gradoEntrada(String vertice) throws VerticeNoEncontradoException {
         int idNodo = buscar(vertice);
 
@@ -255,9 +255,60 @@ public class GrafoListaAdy implements Grafo {
         return null;
     }
 
+    public List<Integer> ordenTopologico() throws CicleDetectedException {
+        int[] grado = new int[cantVert];
+        boolean[] marca = new boolean[cantVert];
+
+        for(int nod=0; nod < cantVert; nod++)
+            for(Arista arista: adj.get(nod))
+                grado[arista.getDestino()]++;
+
+        Queue<Integer> Q = new LinkedList<>();
+        for(int nod=0; nod < cantVert; nod++)
+            if( grado[nod] == 0 )
+                Q.add(nod);
+
+        List<Integer> orden = new ArrayList<>();
+        while( !Q.isEmpty() ){
+            int nod = Q.poll();
+            orden.add(nod);
+
+            marca[nod] = true;
+            for(Arista arista: adj.get(nod)){
+                int destino = arista.getDestino();
+                grado[destino]--;
+
+                if( grado[destino] == 0 && !marca[destino] )
+                    Q.add(destino);
+            }
+        }
+
+        if( orden.size() != cantVert )
+            throw new CicleDetectedException();
+
+        return orden;
+    }
+
     @Override
-    public float[] caminoMAciclico(String verticeOrigen) {
-        return null;
+    public float[] caminoMAciclico(String verticeOrigen) throws CicleDetectedException, VerticeNoEncontradoException {
+        int idOrigen = buscar(verticeOrigen);
+        float[] dist = new float[cantVert];
+
+        for(int i=0; i < cantVert; i++)
+            dist[i] = INF;
+        dist[idOrigen] = 0;
+
+        List<Integer> orden = ordenTopologico();
+        for(Integer nod: orden){
+            for(Arista arista: adj.get(nod)){
+                int destino = arista.getDestino();
+                float peso = arista.getPeso();
+
+                if( dist[destino] > dist[nod] + peso )
+                    dist[destino] = dist[nod] + peso;
+            }
+        }
+        return dist;
     }
 
     private void recorridoProfundidadRecursivo(int idNodo, List<Integer> orden, boolean[] marca) {
