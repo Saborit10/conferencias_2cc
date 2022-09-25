@@ -340,6 +340,38 @@ public class GrafoListaAdy implements Grafo {
         return nombresVert;
     }
 
+    @Override
+    public float arbolExpansionMinimoPrim() {
+        return 0;
+    }
+
+    @Override
+    public float arbolExpansionMinimoKruskal() {
+        List<AristaExt> listaAristas = new ArrayList<>();
+
+        for (int nod=0; nod < cantVert; nod++){
+            for(Arista arista: adj.get(nod)){
+                listaAristas.add(new AristaExt(nod, arista.getDestino(), arista.getPeso()));
+            }
+        }
+
+        Collections.sort(listaAristas);
+        ConjuntoDisjunto S = new ConjuntoDisjunto(cantVert);
+
+        float mst = 0.0f;
+        for(AristaExt arista: listaAristas){
+            int conjIni = S.buscarConjunto(arista.getInicio());
+            int conjDest = S.buscarConjunto(arista.getDestino());
+
+            if( conjIni != conjDest ){
+                mst += arista.getPeso();
+
+                S.unirConjuntos(conjIni, conjDest);
+            }
+        }
+        return mst;
+    }
+
     /* Helper Method */
     public void imprimirListaAdyacencia(){
         for(int i=0; i < cantVert; i++){

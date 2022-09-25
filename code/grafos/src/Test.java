@@ -60,4 +60,25 @@ public class Test {
         Arrays.toString(G.caminoMAciclico("A"))
     );
   }
+
+  public static void testArbolExpansionMinimoKruskal(){
+    GrafoListaAdy G = new GrafoListaAdy();
+
+    G.insVertice("A");
+    G.insVertice("B");
+    G.insVertice("C");
+    G.insVertice("D");
+    G.insVertice("E");
+    G.insVertice("F");
+
+    G.insArista("A", "B", 3);
+    G.insArista("A", "C", 4);
+    G.insArista("A", "D", 2);
+    G.insArista("C", "D", 1);
+    G.insArista("D", "B", 2);
+    G.insArista("D", "E", 5);
+    G.insArista("E", "C", 2);
+
+    System.out.println(G.arbolExpansionMinimoKruskal());
+  }
 }
