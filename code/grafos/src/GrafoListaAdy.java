@@ -235,6 +235,8 @@ public class GrafoListaAdy implements Grafo {
         return adj.get(idNodo).size();
     }
 
+    // TODO: Agregar el metodo Bellman-Ford
+
     int gradoEntrada(String vertice) throws VerticeNoEncontradoException {
         int idNodo = buscar(vertice);
 
