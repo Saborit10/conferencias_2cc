@@ -1,3 +1,5 @@
+package estructuras;
+
 public class ConjuntoDisjunto {
   private int[] padre, rango;
 

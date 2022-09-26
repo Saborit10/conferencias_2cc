@@ -1,3 +1,11 @@
+import estructuras.Arista;
+import estructuras.AristaExt;
+import estructuras.Camino;
+import estructuras.ConjuntoDisjunto;
+import excepciones.CicleDetectedException;
+import excepciones.CicloNegativoException;
+import excepciones.VerticeNoEncontradoException;
+
 import java.util.*;
 
 public class GrafoListaAdy implements Grafo {
@@ -251,8 +259,30 @@ public class GrafoListaAdy implements Grafo {
     }
 
     @Override
-    public float[] caminoMConPesosNegativos(String verticeOrigen) {
-        return null;
+    public float[] caminoMConPesosNegativos(String verticeOrigen) throws VerticeNoEncontradoException, CicloNegativoException {
+        int idOrigen = buscar(verticeOrigen);
+        float[] dist = new float[cantVert];
+
+        for(int i=0; i < cantVert; i++)
+            dist[i] = INF;
+        dist[idOrigen] = 0;
+
+        for(int fase=1; fase<=cantVert; fase++){
+            for(int nodo=0; nodo < cantVert; nodo++){
+                for(Arista arista: adj.get(nodo)){
+                    int destino = arista.getDestino();
+                    float peso = arista.getPeso();
+
+                    if( dist[destino] > dist[nodo] + peso ){
+                        dist[destino] = dist[nodo] + peso;
+
+                        if( fase == cantVert )
+                            throw new CicloNegativoException();
+                    }
+                }
+            }
+        }
+        return dist;
     }
 
     public List<Integer> ordenTopologico() throws CicleDetectedException {

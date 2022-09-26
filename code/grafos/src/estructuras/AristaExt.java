@@ -1,3 +1,5 @@
+package estructuras;
+
 public class AristaExt extends Arista implements Comparable<AristaExt>{
   private final static float EPS = 1e-9f;
 

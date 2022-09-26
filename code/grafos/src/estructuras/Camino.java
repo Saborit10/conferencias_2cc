@@ -1,3 +1,5 @@
+package estructuras;
+
 public class Camino implements Comparable<Camino>{
     private final static float EPS = 1e-9f;
 

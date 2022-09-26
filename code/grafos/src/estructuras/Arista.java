@@ -1,3 +1,5 @@
+package estructuras;
+
 public class Arista {
     protected int destino;
     protected float peso;

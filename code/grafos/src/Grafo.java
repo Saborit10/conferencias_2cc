@@ -1,3 +1,7 @@
+import excepciones.CicleDetectedException;
+import excepciones.CicloNegativoException;
+import excepciones.VerticeNoEncontradoException;
+
 import java.util.List;
 
 public interface Grafo {
@@ -78,7 +82,7 @@ public interface Grafo {
 
     float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException;
 
-    float[] caminoMConPesosNegativos(String verticeOrigen);
+    float[] caminoMConPesosNegativos(String verticeOrigen) throws VerticeNoEncontradoException, CicloNegativoException;
 
     float[] caminoMAciclico(String verticeOrigen) throws CicleDetectedException, VerticeNoEncontradoException;
 
