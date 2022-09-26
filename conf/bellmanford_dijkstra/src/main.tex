@@ -462,13 +462,14 @@
 
     Es importante aclarar que si un grafo contiene un \textit{ciclo con peso negativo} (un ciclo en el que la suma de las aristas que lo componen es negativa) y se puede llegar a este desde el v\'ertice origen $s$, entonces no es posible encontrar un camino m\'inimo en el grafo, ya que podemos recorrer el ciclo cualquier n\'umero de veces y cada vez que lo recorramos vamos a disminuir la longitud del camino.
 
+% TODO Agragar una imagen de cicl o negativo y explicarlA
+
 \section{Algoritmo de Bellman-Ford}
     El algoritmo de Bellman y Ford nos permite encontrar los caminos m\'inimos desde el nodo $s$ hasta cada uno de los nodos del grafo. Si el grafo contiene un ciclo con peso negativo, este procedimiento es capaz de detectarlo.
 
-    \textit{El algoritmo lleva el nombre de dos científicos estadounidenses: Richard Bellman y Lester Ford. En realidad, Ford inventó este algoritmo en 1956 durante el estudio de otro problema matemático, que finalmente se redujo a un subproblema de encontrar los caminos más cortos en el grafo, y Ford dio un esbozo del algoritmo para resolver este problema. Bellman publicó en 1958 un artículo dedicado específicamente al problema de encontrar el camino más corto, y en este artículo formuló claramente el algoritmo en la forma en que lo conocemos ahora.}
-
     El algoritmo comienza con una aproximaci\'on inicial de las distancias desde el v\'ertice $s$. Dicha aproximaci\'on consiste en asignar el valor $\infty$ a todas las distancias m\'inimas excepto a la del nodo $s$, la cual podemos asegurar que ser\'a igual a $0$.
 
+    Analicemos en el siguente grafo, cu\'ales ser\'an las distancias m\'inimas desde el vertice $1$ hasta todos lo nodos del grafo:
     \begin{minipage}{\columnwidth}
         \includegraphics[width=\linewidth]{imag/graph1}
         \label{example_sum}
@@ -479,10 +480,67 @@
     Por ejemplo, en el grafo de la imagen, la arista $1 \rightarrow 2$ se puede relajar, mejorando as\'i el valor de la distancia del nodo $2$, que era igual a $\infty$ y ahora ser\'a igual a $2$.
 
     \begin{corollary}[Relajar una Arista]
-
+%TODO
     \end{corollary}
 
+    Vamos a tratar de \textit{relajar} todas la aristas del grafo. Supongamos que lo hacemos en el siguiente orden: $(1 \rightarrow 2)$, $(3 \rightarrow 4)$, $(1 \rightarrow 3)$, $(4 \rightarrow 5)$, $(2 \rightarrow 5)$, $(2 \rightarrow 4)$ y $(1 \rightarrow 4)$. Las distancias m\'inimas del grafo quedar\'ian de la siguente manera:
 
+%    TODO [Imagen]
+
+    Podemos notar que las distancias m\'inimas correspondientes a los v\'ertices $4$ y $5$ son incorrectas. El largo correcto del camino m\'inimo desde el v\'ertice $1$ hasta el v\'ertice $4$ es igual a $1$, y hasta el v\'ertice $5$ es $3$.
+
+    Pero ?`qu\'e hubiera pasado si hubi\'eramos analizado las aristas en un orden diferente? Por ejemplo en el orden $(1 \rightarrow 2)$, $(2 \rightarrow 5)$, $(1 \rightarrow 3)$, $(2 \rightarrow 4)$, $(3 \rightarrow 4)$, $(4 \rightarrow 5)$ y $(1 \rightarrow 4)$. Las distancias m\'inimas hubieran quedado de la siguente manera:
+%    TODO [Imagen]
+
+    Estas distancias son correctas. En el primer caso eran incorrectas porque al relajar la arista $(u\rightarrow v)$, la distancia al v\'ertice $u$, puede que no haya sido la correcta, haciendo que la distancia al nodo $v$, calculada cuando relajamos la arista, tambi\'en sea incorrecta.
+
+    Esto nos sugiere que el orden en que tratamos de relajar las aristas es importante para obtener resultados correctos. Pero ?`c\'omo podemos saber cu\'al es este orden? Por ahora no podemos determinarlo. Pero tenemos otra opci\'on: repetir el procedimieto de relajar todas las aristas del grafo, hasta que este contenga las distancias m\'inimas correctas. \newline
+
+    \noindent\textit{?`Cu\'ando el grafo contiene los largos correctos de los caminos m\'inimos?}\newline
+
+    \begin{property}
+        Supongamos que ya hemos calculado los largos de los caminos m\'inimos en un grafo, entonces ninguna arista en el grafo podr\'a ser relajada.
+    \end{property}
+
+    Si pudi\'eramos relajar una arista, entonces habr\'ia al menos un camino que puede ser mejorado, por tanto hab\'ia un camino en el grafo cuyo largo no era m\'inimo. Por el contrario, si ning\'un camino del grafo puede ser mejorado, entonces no podemos relajar ninguna arista.
+
+    Entonces podr\'iamos llevar a cabo varias fases, donde en cada fase tratamos de relajar todas las aristas del grafo. Si en una fase no podemos relajar ninguna de las aristas, entonces sabemos que las distancias calculadas ya son correctas y que podemos terminar. \newline
+
+    \noindent\textit{?`Puede el algoritmo no terminar nunca?}\newline
+
+    Como ya analizamos, si el grafo contiene un ciclo de peso negativo entonces no tiene sentido hablar de un camino m\'inimo ya que podr\'iamos construir un camino que recorriera el ciclo negativo infinitas veces, haciendo cada vez menor el largo del camino.
+
+    En este caso, como siempre podremos mejorar alg\'un camino m\'inimo, en cada fase del algoritmo podremos relajar una arista, haciendo que el procedimiento nunca termine.
+
+    Pero si el grafo no contiene ciclos de peso negativo, entonces podemos aplicar la siguente propiedad.
+
+    \begin{theorem}
+        Si un grafo no contiene ciclos de peso negativo, entonces luego de $|V|-1$ fases del algoritmo de Bellman-Ford, los largos de los caminos m\'inimos calculados son \'optimos.
+    \end{theorem}
+
+    \textit{Demostraci\'on:} Supongamos que un camino m\'inimo tiene la forma $v_0 \rightarrow v_1 \rightarrow v_2 \rightarrow \ldots \rightarrow v_{k-1} \rightarrow v_k$, donde v_0 es el v\'ertice origen.
+
+    Luego de la primera fase, en la que tratamos de relajar todas las aristas del grafo, podemos asegurar que la distancia m\'inima calculada hasta el v\'ertice $v_1$ ser\'a m\'inima, porque la estamos calculando a partir de la distancia del v\'ertice $v_0$, de la cual ya sabemos su distancia \'optima. Luego de la segunda fase, podemos asegurar que la distancia del tercer nodo el camino, o sea $v_2$, ya es correcta, porque est\'a calculada a partir de la distancia m\'inima correcta del nodo $v_1$. Siguendo este razonamiento, podemos afirmar que al terminar la $k$-\'esima fase, el largo del camino hasta el nodo $v_k$ es \'optimo.
+
+    Entonces para calcular todos los largos \'optimos de los caminos, debemos llevar a cabo como m\'aximo un n\'umero de fases igual al n\'umero m\'aximo de aristas en cualquier camino m\'inimo del grafo. Este n\'umero, como se demuestra a continuaci\'on, es igual a $|V| - 1$. \blacksquare
+
+    \begin{property}
+        Si el grafo no contiene un ciclo de peso negativo, entonces el camino m\'inimo desde un nodo hasta otro no podr\'a contener m\'as de $|V|-1$ aristas.
+    \end{property}
+    \textit{Demostraci\'on:} De otra forma habr\'ia que pasar dos veces por un mismo nodo, formando un ciclo, pero como el grafo no contiene ciclos de peso negativo, entonces el peso del ciclo ser\'a positivo, y podemos eliminar este ciclo del camino, formando as\'i un camino mejor o igual, pero en el que no se repiten nodos, por lo que a lo m\'as contendr\'a $|V|-1$ aristas. \blacksquare
+
+    En conclusi\'on, en el algoritmo de Bellman-Ford, llevamos a cabo $|V|-1$ fases. Luego, si el grafo no contiene ciclos de peso neagitvo, entonces las distancias calculadas son correctas. Pero si el grafo contiene ciclos de peso negativo, podemos
+
+
+
+
+
+
+
+%    Esta propiedad nos ser\'a
+
+\section{Sobre los Autores de os Algoritmos}
+    El algoritmo Bellman-Ford lleva el nombre de dos científicos estadounidenses: Richard Bellman y Lester Ford. En realidad, Ford inventó este algoritmo en 1956 durante el estudio de otro problema matemático, que finalmente se redujo a un subproblema de encontrar los caminos más cortos en el grafo, y Ford dio un esbozo del algoritmo para resolver este problema. Bellman publicó en 1958 un artículo dedicado específicamente al problema de encontrar el camino más corto, y en este artículo formuló claramente el algoritmo en la forma en que lo conocemos ahora.
 
 \end{multicols}
 \end{document}
