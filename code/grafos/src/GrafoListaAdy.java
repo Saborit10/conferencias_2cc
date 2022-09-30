@@ -204,8 +204,6 @@ public class GrafoListaAdy implements Grafo {
         return dist;
     }
 
-    // TODO: Agregar el metodo Bellman-Ford
-
     @Override
     public float[] caminoMConPesosPositivos(String verticeOrigen) throws VerticeNoEncontradoException {
         int idOrigen = buscar(verticeOrigen);

@@ -531,6 +531,46 @@
 
     En conclusi\'on, en el algoritmo de Bellman-Ford, llevamos a cabo $|V|-1$ fases. Luego, si el grafo no contiene ciclos de peso neagitvo, entonces las distancias calculadas son correctas. Pero si el grafo contiene ciclos de peso negativo, podemos
 
+%    TODO: Arreglar esto
+
+    \section{Algoritmo de Dijkstra}
+    Como vimos anteriormente, el orden en que se relajan las aristas es importante, si se quieren llevar a cabo el menor numero de fases posibles en el algoritmo de Bellman-Ford. Pero si se cumplen ciertas condiciones, podemos encontrar un orden de las aristas que nos asegure que solo sea necesaria una fase.
+
+    Primero inicializamos los largos de los caminos m\'inimos con el valor $\infty$, excepto el del nodo inicial $s$ que ser\'a igual a $0$.
+    
+    \begin{corollary}[Algoritmo de Dijkstra]
+        Vamos a llevar a cabo $|V|$ pasos. En cada paso tomamos el nodo con menor distancia, que no haya sido seleccionado previamente. Entonces tratamos de relajar todas las aristas que salen de \'el. Despu\'es de actualizar todas las distancias, seleccionamos el siguente nodo, y as\'i sucesivamente.
+
+        Para buscar el nodo con menor distancia, hacemos un ciclo comparando los largos de los caminos m\'inimos que no hayan sido procesados a\'un.
+
+    \end{corollary}
+
+    Una propiedad importante del procedimiento anterior es que cuando encontramos el nodo con distancia m\'inima, podemos asegurar que el largo del camino m\'inimo hasta este nodo ya es \'optimo, y que no cambiar\'a en los restantes pasos del algoritmo.
+
+    Por ejemplo, para el grafo de la figura:
+
+%   TODO: Insertar figura
+
+    Comenzamos tomando del nodo $1$ con distancia $0$. Luego de relajar las aristas que salen de \'el, las disctancia quedan:
+
+%   TODO: Insertar figura
+
+    Ahora tomamos el nodo $2$, cuya distancia es igual a $2$. Despu\'es de actualizar las distancias, el grafo queda:
+
+%   TODO: Insertar figura
+
+    El pr\'oximo nodo en ser tomado es el $3$ con distancia igual a $3$.
+
+%   TODO: Insertar figura
+
+    Tomamos el v\'ertice $4$, cuya distancia es $5$:
+
+%   TODO: Insertar figura
+
+    Y finalmente el nodo $5$ con distancia igual a $7$. Al final las distancias quedan:
+
+%   TODO: Insertar figura
+
 
 
 
@@ -539,7 +579,7 @@
 
 %    Esta propiedad nos ser\'a
 
-\section{Sobre los Autores de os Algoritmos}
+\section{Sobre los Autores de los Algoritmos}
     El algoritmo Bellman-Ford lleva el nombre de dos científicos estadounidenses: Richard Bellman y Lester Ford. En realidad, Ford inventó este algoritmo en 1956 durante el estudio de otro problema matemático, que finalmente se redujo a un subproblema de encontrar los caminos más cortos en el grafo, y Ford dio un esbozo del algoritmo para resolver este problema. Bellman publicó en 1958 un artículo dedicado específicamente al problema de encontrar el camino más corto, y en este artículo formuló claramente el algoritmo en la forma en que lo conocemos ahora.
 
 \end{multicols}
