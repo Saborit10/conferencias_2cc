@@ -60,6 +60,31 @@ public class Test {
         Arrays.toString(G.caminoMAciclico("A"))
     );
   }
+  
+  public static void testCantCaminos() throws CicleDetectedException, VerticeNoEncontradoException {
+    GrafoListaAdy G = new GrafoListaAdy();
+    
+    G.insVertice("A");
+    G.insVertice("B");
+    G.insVertice("C");
+    G.insVertice("D");
+    G.insVertice("E");
+    G.insVertice("F");
+    
+    G.insArista("A", "B");
+    G.insArista("A", "C");
+    G.insArista("A", "D");
+    G.insArista("C", "D");
+    G.insArista("D", "B");
+    G.insArista("D", "E");
+    
+    // --- Comenta la siguiente linea para que no hayan ciclos en el grafo
+//    G.insArista("E", "C");
+    
+    System.out.println(
+      Arrays.toString(G.cantCaminos("A"))
+    );
+  }
 
   public static void testArbolExpansionMinimoKruskal(){
     GrafoListaAdy G = new GrafoListaAdy();

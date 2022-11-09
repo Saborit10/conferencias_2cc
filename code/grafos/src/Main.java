@@ -3,7 +3,7 @@ public class Main {
 
 //        Test.testOrdenTopologico();
 //        Test.testCaminoMAciclico();
-        Test.testArbolExpansionMinimoKruskal();
+        Test.testCantCaminos();
 
     }
 }

@@ -338,6 +338,31 @@ public class GrafoListaAdy implements Grafo {
         }
         return dist;
     }
+    
+    public long[] cantCaminos(String verticeOrigen) throws VerticeNoEncontradoException, CicleDetectedException {
+        int idOrigen = buscar(verticeOrigen);
+        long[] cant = new long[cantVert];
+        
+        /* En aristasEnt vamos a guardar, para cada nodo, una lista de los nodos desde
+        los que se puede llegar a este. No hace falta guardar la arista completa */
+        List<List<Integer>> aristasEnt = new ArrayList<>();
+        for(int i=0; i < cantVert; i++)
+            aristasEnt.add(new ArrayList<>());
+        
+        for(int nodo=0; nodo < cantVert; nodo++)
+            for(Arista arista: adj.get(nodo))
+                aristasEnt.get(arista.getDestino()).add(nodo);
+        
+        cant[idOrigen] = 1;
+        List<Integer> orden = ordenTopologico();
+        
+        for(Integer nodo: orden){
+            for(Integer nodoAnterior: aristasEnt.get(nodo))
+                cant[nodo] += cant[nodoAnterior];
+        }
+        
+        return cant;
+    }
 
     private void recorridoProfundidadRecursivo(int idNodo, List<Integer> orden, boolean[] marca) {
         marca[idNodo] = true;
