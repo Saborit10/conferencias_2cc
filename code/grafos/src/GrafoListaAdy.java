@@ -161,12 +161,21 @@ public class GrafoListaAdy implements Grafo {
         recorridoProfundidadRecursivo(buscar(verticeOrigen), orden, marca);
         return orden;
     }
-
-    @Override
-    public float[] caminoMSinPesos(String verticeOrigen) {
-        return null;
+    
+    
+    private void recorridoProfundidadRecursivo(int idNodo, List<Integer> orden, boolean[] marca) {
+        marca[idNodo] = true;
+        orden.add(idNodo);
+        
+        for(Arista arista: adj.get(idNodo)){
+            int idNuevoNodo = arista.getDestino();
+            
+            if (!marca[idNuevoNodo]) {
+                recorridoProfundidadRecursivo(idNuevoNodo, orden, marca);
+            }
+        }
     }
-
+    
     /**
      * Algoritmo de Dijkstra en O(|V|^2)
      * @param verticeOrigen Es el vertice desde donde se calculan los caminos minimos
@@ -339,7 +348,7 @@ public class GrafoListaAdy implements Grafo {
         return dist;
     }
     
-    public long[] cantCaminos(String verticeOrigen) throws VerticeNoEncontradoException, CicleDetectedException {
+    public long[] cantCaminosGrafoDirigidoSinCiclos(String verticeOrigen) throws VerticeNoEncontradoException, CicleDetectedException {
         int idOrigen = buscar(verticeOrigen);
         long[] cant = new long[cantVert];
         
@@ -362,19 +371,6 @@ public class GrafoListaAdy implements Grafo {
         }
         
         return cant;
-    }
-
-    private void recorridoProfundidadRecursivo(int idNodo, List<Integer> orden, boolean[] marca) {
-        marca[idNodo] = true;
-        orden.add(idNodo);
-
-        for(Arista arista: adj.get(idNodo)){
-            int idNuevoNodo = arista.getDestino();
-
-            if (!marca[idNuevoNodo]) {
-                recorridoProfundidadRecursivo(idNuevoNodo, orden, marca);
-            }
-        }
     }
 
     public String getNombre(int idNodo) {

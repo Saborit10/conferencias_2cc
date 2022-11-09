@@ -82,7 +82,7 @@ public class Test {
 //    G.insArista("E", "C");
     
     System.out.println(
-      Arrays.toString(G.cantCaminos("A"))
+      Arrays.toString(G.cantCaminosGrafoDirigidoSinCiclos("A"))
     );
   }
 
