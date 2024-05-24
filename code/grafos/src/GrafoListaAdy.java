@@ -421,6 +421,51 @@ public class GrafoListaAdy implements Grafo {
         return mst;
     }
 
+    @Override
+    public float [][] caminoMEntrePares() {
+        float[][] distances = new float[cantVert][cantVert];
+
+        for (int i = 0; i < cantVert; i++) {
+            for(int j = 0 ; j <cantVert ;j++)
+            {
+                distances[i][j]=INF;
+            }
+            distances[i][i] = 0;
+        }
+
+        for (int i = 0; i < cantVert; i++) {
+           
+            distances[i][i] = 0;
+            for (Arista arista : adj.get(i)) {
+            
+                if(distances[i][arista.getDestino()]>arista.getPeso())
+                {
+                    distances[i][arista.getDestino()]=distances[arista.getDestino()][i]=arista.getPeso();
+                }
+
+            }
+             
+        }
+
+        for (int k = 0; k < cantVert; k++) 
+        {
+             for (int i = 0; i < cantVert; i++)
+            {
+                 for (int j = i + 1; j < cantVert; j++) {
+                    if(distances[i][k]==INF||distances[k][j]==INF)
+                        continue;
+                    float a = distances[i][k] + distances[k][j];
+                    if (distances[i][j] > a) 
+                    {
+                        distances[j][i] = distances[i][j] = a;
+                    }
+                }
+            }
+        }
+
+        return distances;
+    }
+
     /* Helper Method */
     public void imprimirListaAdyacencia(){
         for(int i=0; i < cantVert; i++){

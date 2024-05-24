@@ -89,4 +89,6 @@ public interface Grafo {
     float arbolExpansionMinimoPrim();
 
     float arbolExpansionMinimoKruskal();
+
+    float[][] caminoMEntrePares();
 }
